@@ -9,7 +9,7 @@ const Home = async () => {
   
     const infuraProvider = await connectWithInfura();
     if (infuraProvider) {
-      const network = infuraProvider.chain; // Access the chain property directly
+      const network = infuraProvider.chain; 
       if (network) {
         chainName = network.name;
       }
