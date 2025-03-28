@@ -26,15 +26,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased  min-h-screen bg-slate-100 text-slate-900 font-sans`}
       >
-        <header className="bg-slate-900 text-white p-4 text-center"> 
+        <header className="text-white p-4 text-center"> 
           <Navigation/>
         </header>
         {children}
-        <footer className="bg-slate-900 text-white p-4 text-center">
+        {/* <footer className="bg-slate-900 text-white p-4 text-center">
           <p>&copy; 2025 Right Share</p>
-        </footer>
+        </footer> */}
       </body>
     </html>
   );

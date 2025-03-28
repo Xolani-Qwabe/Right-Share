@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { createWalletClient, custom } from 'viem';
 import { mainnet } from 'viem/chains';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faWallet, faLink } from '@fortawesome/free-solid-svg-icons'
 
 declare global {
   interface Window {
@@ -46,8 +48,9 @@ const WalletConnect: React.FC = () => {
   };
 
   return (
-    <button onClick={connectWallet} disabled={isConnecting}>
-      {account ? `Connected: ${account}` : isConnecting ? 'Connecting...' : 'Connect Wallet'}
+    <button onClick={connectWallet} disabled={isConnecting} className='flex gap-2 p-3 cursor-pointer border-3 rounded-4xl  text-blue-400 flex items-center'>
+      {account ? `Connected: ${account}` : isConnecting ? '...' : <FontAwesomeIcon icon={faLink} className='text-1xl'/>}
+      <FontAwesomeIcon icon={faWallet} className='text-1xl'/>
     </button>
   );
 };
