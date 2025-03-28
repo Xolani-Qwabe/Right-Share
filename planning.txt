@@ -4,6 +4,10 @@
 ## CORE ROUTES STRUCTURE
 =====================
 
+=====================
+## FRONTEND ROUTES
+=====================
+
 [AUTHENTICATION]
 /auth/signup                 - User registration
 /auth/login                  - Login
@@ -21,6 +25,15 @@
 /artist/projects             - Manage projects
 /artist/stats                - Analytics dashboard
 /artist/earnings             - Royalty breakdown
+/artist/team                 - Manage contributors
+
+[PROFESSIONAL]
+/pro/signup                  - Service provider registration
+/pro/dashboard               - Professional workspace
+/pro/marketplace             - Browse available projects
+/pro/tasks                   - Task management
+/pro/invoices                - Payment history
+/pro/settings                - Service preferences
 
 [PROJECT]
 /projects                    - Discover projects
@@ -28,6 +41,7 @@
 /projects/:id/invest         - NFT purchase
 /projects/:id/stats          - Streaming/Revenue analytics
 /projects/:id/store          - Project merch store
+/projects/:id/tasks          - Project tasks board
 
 [STORE]
 /store                       - Main storefront
@@ -36,6 +50,7 @@
 /store/tickets               - Event tickets
 /store/cart                  - Shopping cart
 /store/checkout              - Checkout process
+/store/orders                - Order history
 
 [FAN ENGAGEMENT]
 /campaigns                   - Available tasks
@@ -43,26 +58,88 @@
 /rewards                     - Earned rewards
 /rewards/redeem              - Reward redemption
 
+[LEGAL]
+/terms                       - Terms of service
+/privacy                     - Privacy policy
+/disclaimer                  - Risk disclaimer
+
 =====================
 ## API ENDPOINTS
 =====================
 
-[ANALYTICS API]
-GET /api/stats/artist/:id    - Artist performance data
-GET /api/stats/project/:id   - Project performance data
-POST /api/stats/sync         - Manual data sync
+[AUTH API]
+POST /api/auth/register      - User registration
+POST /api/auth/login         - Login
+POST /api/auth/verify        - Account verification
 
-[EXTERNAL SERVICE INTEGRATIONS]
-GET /api/youtube/:id         - YouTube analytics
-GET /api/spotify/:id         - Spotify streams
+[ARTIST API]
+GET /api/artists/:id         - Artist profile data
+POST /api/artists/projects   - Create new project
+GET /api/artists/:id/stats   - Artist analytics
+
+[PROJECT API]
+POST /api/projects           - Project creation
+GET /api/projects/:id        - Project details
+POST /api/projects/:id/tasks - Add project task
+
+[PROFESSIONAL API]
+POST /api/pro/register       - Professional onboarding
+GET /api/pro/marketplace     - Available projects
+POST /api/pro/tasks/apply    - Apply for task
+PUT /api/pro/tasks/:id       - Submit task completion
+
+[ANALYTICS API]
+GET /api/stats/artist/:id    - Artist performance
+GET /api/stats/project/:id   - Project analytics
+POST /api/stats/sync         - Manual data refresh
+
+[STREAMING API]
+GET /api/youtube/:id         - YouTube stats
+GET /api/spotify/:id         - Spotify analytics
 GET /api/apple/:id           - Apple Music data
-POST /api/samro/register     - SAMRO registration
 
 [E-COMMERCE API]
 POST /api/products           - Create product
 GET /api/products/:id        - Product details
 POST /api/orders             - Create order
-GET /api/orders/:id          - Order status
+POST /api/orders/cancel      - Cancel order
+
+[PAYMENTS API]
+GET /api/payments/balance    - Check balance
+POST /api/payments/withdraw  - Initiate withdrawal
+GET /api/payments/history    - Transaction history
+
+[LEGAL API]
+POST /api/legal/sign         - Contract signing
+GET /api/legal/status        - Agreement status
+
+=====================
+## SMART CONTRACT ENDPOINTS
+=====================
+
+[CHAIN INTERACTIONS]
+POST /api/contract/projects/create    - Deploy new project
+POST /api/contract/tasks/complete     - Confirm task completion
+POST /api/contract/royalties/distribute - Trigger payout
+
+[EVENT LISTENERS]
+GET /api/events/payment-received      - Payment notifications
+GET /api/events/task-created          - New task alerts
+GET /api/events/nft-transfer          - NFT transfer tracking
+
+=====================
+## ADMIN ROUTES (INTERNAL)
+=====================
+
+[ADMIN API]
+GET /admin/projects/pending   - Approve projects
+POST /admin/payments/override - Manual payment
+GET /admin/analytics          - Platform metrics
+
+[MODERATION]
+POST /admin/content/flag      - Flag content
+GET /admin/disputes           - View disputes
+POST /admin/disputes/resolve  - Resolve case
 
 =====================
 ## WORKFLOW OVERVIEW

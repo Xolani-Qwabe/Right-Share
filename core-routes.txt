@@ -1,0 +1,183 @@
+🌐 Core Landing Page Routes
+Route |	Purpose	| Key CTAs
+/	| Hero page |	"Join Waitlist", "Join the Discussion"
+/about | Mission/team |	"Meet Our Artists", "Partner With Us"
+/how-it-works |	Process explainer |	"See Examples", "Get Started"
+/how-it-works/artists | Artist value prop | "Submit Your Project" (form)
+/how-it-works/professionals | Talent recruitment	"Apply as Pro" (form)
+/how-it-works/investors | Investor pitch	| "Get Early Access"
+/threads/
+/threads/id
+/faq | Common questions | "Contact Support", "Join Discord"
+
+### Legal Pages
+```plaintext
+/terms
+/privacy
+/cookie-policy
+/risk-disclaimer
+
+Conversation-Focused Forms
+[WAITLIST SIGNUP]
+POST /api/landing/waitlist
+Params: { email, userType: "artist|pro|investor" }
+
+[PROJECT SUBMISSION]
+POST /api/landing/project-apply
+Params: {
+  name, 
+  email,
+  projectName,
+  genre,
+  demoLink (SoundCloud/YouTube)
+}
+
+[PROFESSIONAL APPLICATION]
+POST /api/landing/pro-apply
+Params: {
+  name,
+  email,
+  service: ["mixing","mastering","marketing"],
+  portfolioLink,
+  samroId (optional)
+}
+
+graph TD
+    A[Artist Applies] --> B[Project Review]
+    B --> C[NFT Minting]
+    C --> D[Funding]
+    D --> E[Production, Marketing, Sales]
+    E --> F[Revenue Sharing, Analytics]
+
+Tracking ENDPOINTS
+[ANALYTICS]
+POST /api/track/cta-click - Logs button clicks
+Params: { elementId: "waitlist-top", page: "home" }
+
+[EMAIL VERIFICATION]
+GET /api/verify/email?token=:token - Confirm waitlist signups
+
+SEO-Optimized Pages
+
+Page |	Meta Focus | Target Keywords
+/	| "Blockchain Music Funding" |	"NFT music investments"
+/for-artists |	"Artist Funding Program" |	"get music funded"
+/how-it-works |	"Royalty Sharing Explained" |	"music NFT royalties"
+
+🎯 Recommended CTAs by User Type
+Artists
+
+"Get Funded" (links to /project-apply)
+
+"See Royalty Calculator" (interactive tool)
+
+Professionals
+
+"Join Creative Network" (links to /pro-apply)
+
+"View Open Projects" (teaser of marketplace)
+
+Investors
+
+"Access Deal Flow" (email capture)
+
+"Download Prospectus" (PDF/gated)
+
+1. Primary CTAs (Above the Fold)
+Text |	Location |	Action	| Style
+"Join Beta Waitlist" |	Hero section |	Opens email signup |Large, contrasting button
+"See How It Works" | Header nav	| Links to /how-it-works |	Text link with arrow icon
+"Get Funded →" | Hero sub-section |	Links to /for-artists | Secondary button
+
+2 For Professionals:
+
+"Apply as a Music Pro"
+
+Triggers modal with:
+    // Example form structure
+    {
+    profession: ["Producer", "Engineer", "Marketer"],
+    portfolio: FileUpload,
+    contact: "+27 [___] ___ ____"
+    }
+    Appears on: /for-professionals, footer
+
+For Investors:
+
+"Get Early Access to Deals"
+
+Links to VIP waitlist (email + WhatsApp opt-in)
+
+Sticky bar on investor-related pages
+
+For Investors:
+
+"Get Early Access to Deals"
+
+Links to VIP waitlist (email + WhatsApp opt-in)
+
+Sticky bar on investor-related pages
+
+3. Secondary Engagement CTAs
+Text	Purpose	Design Tip
+"Watch Demo Video"	Build trust	Play button icon
+"See Artist Success Stories"	Social proof	Testimonial carousel
+"Download Investor Kit"	Lead gen	PDF icon + email gate
+
+4. Urgency-Driven CTAs
+"Join First 100 Artists – 0% Fees"
+
+Timer component: ⏳ Limited spots remaining: 23/100
+
+Red badge: "Exclusive Offer"
+
+"Apply by [Date] for Priority Review"
+
+Deadline countdown component
+
+CTA Design Best Practices
+Visual Hierarchy
+
+Primary CTA: bg-blue-600 hover:bg-blue-700 (Tailwind)
+
+Secondary: Outline button border-2 border-blue-600
+
+Microcopy
+
+Instead of "Submit" → "Get My Project Funded"
+
+Instead of "Learn More" → "See Royalty Examples"
+
+Placement Rules
+
+Minimum 1 CTA per scroll depth (every ~600px)
+
+Floating CTA bar on mobile
+
+Triggers:
+
+Emotional trigger ("🚀")
+
+Time reassurance ("2 mins")
+
+Visual prominence (gradient + pulse)
+Tracking CTAs
+Add these data attributes to measure performance:
+
+html
+Copy
+<button 
+  data-cta-id="hero-waitlist-mobile" 
+  data-event="click_waitlist_top"
+>
+  Join Waitlist
+</button>
+
+Analytics to track:
+
+Click-through rate (CTR) per CTA
+
+Conversion rate by traffic source
+
+Scroll depth before CTA engagement
+

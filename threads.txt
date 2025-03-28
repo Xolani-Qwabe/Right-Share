@@ -1,0 +1,262 @@
+Here's a **complete thread/forum system** for RightShare with routes, data models, and interactive features like @mentions:
+
+---
+
+### **📂 File Structure**
+```
+app/
+  threads/
+    [threadId]/
+      page.tsx          # Thread detail view
+    new/
+      page.tsx          # Create thread form
+    page.tsx            # Thread list
+  api/
+    threads/
+      route.ts          # Thread API endpoints
+    comments/
+      route.ts          # Comment API endpoints
+```
+
+---
+
+### **🌐 Frontend Routes**
+| Route | Purpose | Components |
+|-------|---------|------------|
+| `/threads` | List all threads | `ThreadList`, `SearchBar` |
+| `/threads/new` | Create thread | `ThreadForm`, `TagInput` |
+| `/threads/[threadId]` | Thread detail | `ThreadView`, `CommentSection` |
+
+---
+
+### **🛠️ Backend API Endpoints**
+```ts
+// POST /api/threads
+{
+  "title": "Music Streaming Revenue",
+  "body": "How do we maximize royalties from Spotify?",
+  "tags": ["royalties", "spotify"],
+  "authorId": "user_123"
+}
+
+// GET /api/threads/[threadId]/comments
+// Returns:
+{
+  "comments": [
+    {
+      "id": "comment_456",
+      "text": "@user_123 Have you tried playlist pitching?",
+      "author": { "id": "user_789", "name": "ProducerX" },
+      "mentions": ["user_123"],
+      "replies": [...]
+    }
+  ]
+}
+```
+
+---
+
+### **🗄️ Database Models (MongoDB)**
+#### **Thread**
+```ts
+{
+  _id: ObjectId,
+  title: string,
+  body: string,
+  author: { userId: string, name: string, avatar: string },
+  tags: string[],
+  createdAt: Date,
+  updatedAt: Date
+}
+```
+
+#### **Comment**
+```ts
+{
+  _id: ObjectId,
+  threadId: ObjectId,
+  text: string,              // "@user_123 This is a reply"
+  author: { userId: string, name: string },
+  mentions: string[],        // ["user_123"]
+  parentId?: ObjectId,       // For nested replies
+  createdAt: Date
+}
+```
+
+---
+
+### **⚡ Core Features Implementation**
+
+#### 1. **Thread Creation (`/threads/new`)**
+```tsx
+// app/threads/new/page.tsx
+export default function NewThread() {
+  const [content, setContent] = useState('');
+
+  const handleSubmit = async () => {
+    await fetch('/api/threads', {
+      method: 'POST',
+      body: JSON.stringify({
+        title: "Music Streaming Revenue",
+        body: content,
+        tags: extractTags(content), // Helper fn
+        authorId: currentUser.id
+      })
+    });
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <RichTextEditor 
+        onChange={setContent}
+        mentionUsers={fetchSuggestedUsers}
+      />
+    </form>
+  );
+}
+```
+
+#### 2. **Comment with @Mentions**
+```tsx
+// app/components/CommentInput.tsx
+'use client'
+
+export function CommentInput({ threadId }: { threadId: string }) {
+  const [comment, setComment] = useState('');
+
+  const handleComment = () => {
+    const mentions = comment.match(/@(\w+)/g) || [];
+    fetch(`/api/threads/${threadId}/comments`, {
+      method: 'POST',
+      body: JSON.stringify({
+        text: comment,
+        mentions: mentions.map(m => m.replace('@', ''))
+      })
+    });
+  };
+
+  return (
+    <div>
+      <textarea 
+        value={comment} 
+        onChange={(e) => setComment(e.target.value)}
+        placeholder="Reply with @ mentions..."
+      />
+      <button onClick={handleComment}>Post</button>
+    </div>
+  );
+}
+```
+
+#### 3. **Thread View with Nested Comments**
+```tsx
+// app/threads/[threadId]/page.tsx
+export default async function ThreadPage({ params }: { params: { threadId: string } }) {
+  const thread = await fetchThread(params.threadId);
+  const comments = await fetchComments(params.threadId);
+
+  return (
+    <div>
+      <h1>{thread.title}</h1>
+      <p>{thread.body}</p>
+      
+      <CommentSection comments={comments} />
+      <CommentInput threadId={params.threadId} />
+    </div>
+  );
+}
+```
+
+---
+
+### **🔄 Workflow**
+1. **User creates thread**  
+   `POST /api/threads` → New document in `threads` collection
+
+2. **Others comment**  
+   `POST /api/threads/[id]/comments` → Nested comments stored with:
+   - Parent thread reference
+   - @mentions array
+
+3. **Notification system** triggers when:
+   - Someone comments on your thread
+   - You're @mentioned
+
+4. **Real-time updates** via WebSockets or polling
+
+---
+
+### **🔗 Example API Routes**
+#### `app/api/threads/[threadId]/comments/route.ts`
+```ts
+export async function POST(
+  req: Request,
+  { params }: { params: { threadId: string } }
+) {
+  const { text, mentions } = await req.json();
+  
+  // 1. Save comment
+  const comment = await db.comments.insertOne({
+    threadId: params.threadId,
+    text,
+    mentions,
+    createdAt: new Date()
+  });
+
+  // 2. Trigger notifications
+  mentions.forEach(async (userId: string) => {
+    await db.notifications.insertOne({
+      userId,
+      type: 'mention',
+      commentId: comment.insertedId
+    });
+  });
+
+  return Response.json({ success: true });
+}
+```
+
+---
+
+### **🎨 UI Components**
+1. **Rich Text Editor**  
+   - @mention dropdown (like GitHub/Slack)
+   - Markdown support
+
+2. **Comment Threading**  
+   ```mermaid
+   graph TD
+     A[Thread] --> B[Comment 1]
+     A --> C[Comment 2]
+     B --> D[Reply to 1]
+     D --> E[Nested reply]
+   ```
+
+3. **Notification Badge**  
+   ```tsx
+   <div className="relative">
+     <BellIcon />
+     {unreadCount > 0 && (
+       <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+         {unreadCount}
+       </span>
+     )}
+   </div>
+   ```
+
+---
+
+### **🚀 Recommended Packages**
+1. **Editor**: [Tiptap](https://tiptap.dev/) (for @mentions)
+2. **State**: [Zustand](https://github.com/pmndrs/zustand) (global store)
+3. **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+4. **API**: Next.js Route Handlers
+
+---
+
+This implementation gives us:
+- Threaded discussions
+- @mention notifications
+- Real-time updates
+- Mobile-responsive layout
+- SEO-friendly URLs (`/threads/music-streaming-revenue`)
