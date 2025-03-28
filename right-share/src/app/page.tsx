@@ -21,7 +21,7 @@ const Home = async () => {
 
   return (
     <div>
-      <h1>Home</h1>
+      <h1 className="text-3xl font-bold underline">Home</h1>
       {isConnected ? (
         <p>Connected to chain ID: {chainName}</p>
       ) : (

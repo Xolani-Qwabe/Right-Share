@@ -1,145 +1,122 @@
-<<<<<<< HEAD
-
-
-=======
 # Right-Share
 
-**A blockchain-powered digital music label that funds, publishes, and manages artists' projects through NFT-based revenue sharing, with automated royalty distribution and compliance with South African collection societies.**  
+**The blockchain-powered music ecosystem** - Funding artists through NFTs, automating royalties, and connecting creators with fans through exclusive experiences, merchandise, and data-driven insights.
 
 ---
 
-## **🎵 Overview**  
-We operate as a **next-gen digital music label** focused on the South African market, using blockchain to:  
-✔ **Fund artists** by selling NFTs representing ownership in master recordings & publishing rights  
-✔ **Automate royalty splits** to producers, songwriters, and engineers via smart contracts  
-✔ **Handle licensing & registration** with South African collection societies (SAMRO, CAPASSO, SAMPRA)  
-✔ **Distribute music** while enforcing transparent revenue sharing  
-
-Investors buy NFTs to share in streaming royalties, sync licensing, and other income streams.  
-
----
-
-## **🎛️ Core Features**  
-
-### **1. Artist Onboarding & Project Funding**  
-- Artists submit projects with:  
-  - Demos  
-  - Budget requirements  
-  - Proposed royalty splits (producers, writers, etc.)  
-- Label evaluates & greenlights projects  
-- NFTs minted to represent % ownership in master + publishing  
-
-### **2. Smart Contract Royalty Distribution**  
-- **Automated payments** to contributors (via Avalanche C-Chain):  
-  - Producers (%)  
-  - Songwriters (%)  
-  - Session musicians (fixed fees) and % if composed any part of the music
-  - Publisher (%)  
-- **NFT holders** earn from:  
-  - Streaming (Spotify, Apple Music)  
-  - Sync licensing (films, ads)  
-  - YouTube Content ID
-  - Event ticket sales
-  - Project Merchandise
-  - Artist Bookings that falls within single release to 2 years after album releases    
-
-### **3. Licensing & Rights Management (SA Focused)**  
-- Auto-register with:  
-  - **SAMRO** (Composition royalties)  
-  - **CAPASSO** (Publishing/mechanical rights)  
-  - **SAMPRA** (Master recording rights)  
-  - **RiSA** (Recording Industry of South Africa)  
-- **NFTs = proof of ownership** for royalty claims  
-
-### **4. Revenue Collection & Payouts (ZAR Compatible)**  
-- Aggregates earnings from:  
-  - Local streaming platforms (like Spotify SA, Apple Music SA)  
-  - International DSPs  
-  - Sync deals with SA broadcasters (SABC, eTV, etc.)  
-- **Converts to ZAR-pegged stablecoins** for local payouts  
-- **Quarterly distributions** to NFT holders & contributors  
-
-### **5. Credential Verification (Veramo)**  
-- **Verify identities** of:  
-  - Artists (with SA ID checks)  
-  - Producers/writers (via SAMRO membership checks)  
-- **Issue DIDs** for industry participants and service providers/ project contractors 
+## 🌟 Key Features
+| Feature | Benefit |
+|---------|---------|
+| NFT Funding | Artists raise capital by selling shares in their work |
+| Smart Royalties | Automatic payments to all contributors |
+| Fan Rewards | Engage supporters with earnable perks |
+| Integrated Store | Sell merch, tickets, and exclusive content |
+| Real-Time Stats | Unified analytics across all platforms |
+| SA Licensing | Automated compliance with SAMRO/CAPASSO |
 
 ---
 
-## **⚙️ Tech Stack**  
+## 🛠️ Tech Stack
+**Blockchain Layer**  
+![Avalanche](https://img.shields.io/badge/Avalanche-E84142?style=for-the-badge&logo=Avalanche&logoColor=white)
+- Avalanche C-Chain
+- Hardhat
+- Solidity Smart Contracts:
+  - `RoyaltySplitter.sol` (Enhanced with merch/ticket support)
+  - `ProjectNFT.sol` (ERC-721 with revenue rights)
 
-| **Category**       | **Technologies** |  
-|--------------------|----------------|  
-| **Frontend**       | Next.js, TypeScript |  
-| **Blockchain**     | Avalanche C-Chain, viem, Hardhat |  
-| **Smart Contracts**| RoyaltySplitter, NFTRevenueShare |  
-| **Payments**       | ZAR-pegged stablecoins, Avax, Paystack, Binance API, Local bank integrations |  
-| **Licensing**      | SAMRO, CAPASSO, RISA, SAMPRA, RADIO MONITOR|  
-| **Identity**       | Veramo (DIDs + VCs) |  
-| **Database**       | MongoDB (metadata), SQLite (local cache) |  
-| **Storage**        | IPFS (audio files, contracts, credentials, song masters) |  
+**Frontend**  
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+- Next.js 14 (App Router)
+- TypeScript
+- TailwindCSS
+- Web3Modal (Wallet connectivity)
 
----
+**Backend Services**
+- YouTube Data API v3
+- Spotify Web API
+- Apple Music API
+- SAMRO/CAPASSO integration
 
-## **📌 Smart Contract Workflow**  
+=====================
+## WORKFLOW OVERVIEW
+=====================
 
-1. **Project Approval** → Label signs artist & sets terms  
-2. **NFT Minting** → Investors buy shares (e.g., 1 NFT = 0.1% of master)  
-3. **Revenue Collection** → Streaming/sync royalties pooled in contract  
-4. **Auto-Distribution** → Quarterly payouts to:  
-   - NFT holders (investors)  
-   - Artists (20-50%)  
-   - Producers/writers (pre-set %)  
+1. ARTIST ONBOARDING:
+   - Sign up → Verify identity → Submit project → NFT minting
 
----
+2. PROJECT FUNDING:
+   - Investors buy NFTs → Funds locked in smart contract → Automatic splits configured
 
-## **🚀 Getting Started**  
+3. CONTENT PRODUCTION:
+   - Pay professionals via smart contracts → Distribute tasks → Approve deliverables
 
-### **1. Clone Repo**  
-```bash
+4. MUSIC DISTRIBUTION:
+   - Automated DSP distribution → Register with SAMRO/CAPASSO → Content ID claims
 
-```
+5. FAN ENGAGEMENT:
+   - Fans complete tasks → System verifies → Automatic rewards → Merch discounts
 
-### **2. Install Dependencies**  
-```bash
-npm install
-```
-
-### **3. Set Up Environment**  
-```env
-# Avalanche
-AVALANCHE_RPC_URL=https://api.avax.network/ext/bc/C/rpc  
-PRIVATE_KEY=your_deployer_key  
-
-# APIs
+6. ROYALTY DISTRIBUTION:
+   - Collect revenue → Smart contract splits → Quarterly payouts in ZAR stablecoins
 
 
-### **4. Deploy Contracts**  
-```bash
-npx hardhat run scripts/deploy.js --network avalanche
-```
+## 📊 ANALYTICS INTEGRATION
 
----
+We pull data from:
+- YouTube Analytics API
+- Spotify for Artists
+- Apple Music API
+- SAMRO/CAPASSO reports
 
-## **📜 License**  
-Proprietary (All rights reserved)  
+Key metrics tracked:
+✔ Stream counts per platform  
+✔ Demographic breakdown  
+✔ Revenue per territory  
+✔ Campaign ROI  
+✔ Fan engagement rates  
 
----
+## 🛒 E-COMMERCE MODULE
 
-## **📬 Contact**  
-**Label Team**  
-- Email: info@rightshare.co.za  
-- Twitter: @RightShareSA  
+Features:
+- NFT-gated exclusive content
+- Physical merch with order tracking
+- Digital downloads (stems, acapellas)
+- Event ticketing with NFT verification
+- Bundles (NFT + merch discounts)
 
----
+## 🔄 DATA SYNC WORKFLOW
 
-**💿 Revolutionizing SA music funding & royalties with blockchain.**  
-**🎶 SA artists get funded. Investors earn royalties. Everyone wins.**  
+1. Daily automated sync from platforms
+2. Manual sync option via /api/stats/sync
+3. Blockchain records all transactions
+4. Monthly reports generated for artists
 
----
+## 📂 Project Structure
+rightshare/
 
-### **Want to partner?**  
-We're onboarding SA artists, producers, and investors. [Apply here](#).  
 
->>>>>>> c21db50 (edited readme)
+📈 Analytics Integration
+We track performance across:
+
+Platform	Metrics Captured	Update Frequency
+Spotify	Streams, Listeners, Demographics	Hourly
+YouTube	Views, Engagement, Revenue	Daily
+Apple Music	Plays, Territories	Daily
+SAMRO	Composition Royalties	Monthly
+
+
+📬 Contact Us
+For Artists:
+📧 artists@rightshare.co.za
+📞 +27 12 345 6789
+
+For Investors:
+📧 investors@rightshare.co.za
+🔗 rightshare.co.za/invest
+
+Technical Support:
+🐞 GitHub Issues
+
+🚀 Powered by Avalanche | Veramo Verifiable Credentails| 🎵 Built for African Music | 💡 Blockchain Done Right
+
